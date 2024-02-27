@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "234150718407",
+    "project_id": "fame-nadz",
+    "storage_bucket": "fame-nadz.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:234150718407:android:4a8c5f75eac914bb2987e2",
+        "android_client_info": {
+          "package_name": "com.nadz.fame_nadz"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBhvoOI6uS1PVailqKfx4PMEVAKBv7zLo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
