@@ -1,4 +1,4 @@
-import 'dart:ffi';
+
 
 import 'package:fame_nadz/widgets/text_field_input.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,6 +25,8 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    _bioController.dispose();
+    _userNameController.dispose();
   }
 
   @override
