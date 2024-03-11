@@ -50,6 +50,7 @@ class MyApp extends StatelessWidget {
                   mobileScreenLayout: MobileScreenLayout(),
                   webScreenLayout: WebScreenLayout(),
                 );
+                log
               } else if (snapshot.hasError) {
                 return Center(
                   child: Text('${snapshot.error}'),
