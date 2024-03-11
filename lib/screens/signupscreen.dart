@@ -7,6 +7,7 @@ import 'package:fame_nadz/widgets/text_field_input.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:fame_nadz/screens/login_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import '../responsive/mobile_screen_layout.dart';
@@ -57,6 +58,14 @@ class _SignupScreenState extends State<SignupScreen> {
       setState(() {
         _isLoading = false;
       });
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const ResponsiveLayout(
+            mobileScreenLayout: MobileScreenLayout(),
+            webScreenLayout: WebScreenLayout(),
+          ),
+        ),
+      );
       // navigate to the home screen
       if (context.mounted) {
         Navigator.of(context).pushReplacement(
@@ -87,8 +96,13 @@ class _SignupScreenState extends State<SignupScreen> {
     });
  }
 
-  @override
-  Widget build(BuildContext context) {
+  void navigateToLogin() {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => LoginScreen()));
+  }
+
+@override
+Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -194,11 +208,11 @@ class _SignupScreenState extends State<SignupScreen> {
                     child: const Text("Dont you have an account"),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: navigateToLogin,
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       child: const Text(
-                        "Sign Up",
+                        "Login",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
