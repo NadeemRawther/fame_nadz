@@ -85,6 +85,9 @@ class _SignupScreenState extends State<SignupScreen> {
       if (context.mounted) {
         showSnackBar(context, res);
       }
+      if (res != "success"){
+
+      }
     }
   }
 
@@ -199,7 +202,7 @@ Widget build(BuildContext context) {
               const SizedBox(
                 height: 12,
               ),
-              Flexible(child: Container(), flex: 2),
+              Flexible(flex: 2, child: Container()),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
