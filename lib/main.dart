@@ -3,7 +3,6 @@ import 'package:fame_nadz/responsive/mobile_screen_layout.dart';
 import 'package:fame_nadz/responsive/responsive_layout_screen.dart';
 import 'package:fame_nadz/responsive/web_screen_layout.dart';
 import 'package:fame_nadz/screens/login_screen.dart';
-import 'package:fame_nadz/screens/signupscreen.dart';
 import 'package:fame_nadz/utils/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';

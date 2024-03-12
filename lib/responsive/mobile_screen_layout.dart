@@ -1,4 +1,4 @@
-import 'dart:js_interop';
+
 
 import 'package:fame_nadz/providers/user_provider.dart';
 import 'package:fame_nadz/utils/colors.dart';

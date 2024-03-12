@@ -55,6 +55,16 @@ class _AddPostScreenState extends State<AddPostScreen> {
                 backgroundImage: NetworkImage(
                   "https://unsplash.com/photos/a-large-body-of-water-under-a-cloudy-sky-G9i_plbfDgk"
                 ),
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.3,
+                child: TextField(decoration: const InputDecoration(
+                  hintText: "Write a caption",
+                  border: InputBorder.none,
+
+                ),
+                maxLines: 8,
+                ),
               )
             ],
           )
