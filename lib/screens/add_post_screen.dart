@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/user_provider.dart';
+import '../resources/firestore_methods.dart';
 import '../utils/utils.dart';
 
 class AddPostScreen extends StatefulWidget {
@@ -59,15 +60,55 @@ class _AddPostScreenState extends State<AddPostScreen> {
       },
     );
   }
+  void postImage(String uid, String username, String profImage) async {
+    setState(() {
+      isLoading = true;
+    });
+    // start the loading
+    try {
+      // upload to storage and db
+      String res = await FireStoreMethods().uploadPost(
+        _descriptionController.text,
+        _file!,
+        uid,
+        username,
+        profImage,
+      );
+      if (res == "success") {
+        setState(() {
+          isLoading = false;
+        });
+        if (context.mounted) {
+          showSnackBar(
+            context,
+            'Posted!',
+          );
+        }
+        clearImage();
+      } else {
+        if (context.mounted) {
+          showSnackBar(context, res);
+        }
+      }
+    } catch (err) {
+      setState(() {
+        isLoading = false;
+      });
+      showSnackBar(
+        context,
+        err.toString(),
+      );
+    }
+  }
 
   void clearImage() {
     setState(() {
       _file = null;
+      _descriptionController.text = "";
     });
   }
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _descriptionController.dispose();
   }
@@ -91,12 +132,12 @@ class _AddPostScreenState extends State<AddPostScreen> {
           centerTitle: false,
           actions: [
             TextButton(
-              //     onPressed: () => postImage(
-              //   userProvider.getUser.uid,
-              //   userProvider.getUser.username,
-              //   userProvider.getUser.photoUrl,
-              // ),
-              onPressed: () {},
+                  onPressed: () => postImage(
+                userProvider.getUser.uid,
+                userProvider.getUser.username,
+                userProvider.getUser.photoUrl,
+              ),
+
               child: const Text(
                 "Post",
                 style: TextStyle(
@@ -106,8 +147,13 @@ class _AddPostScreenState extends State<AddPostScreen> {
               ),
             ),
           ]),
+
       body: Column(
-        children: [
+        children:<Widget> [
+          isLoading
+              ? const LinearProgressIndicator()
+              : const Padding(padding: EdgeInsets.only(top: 0.0)),
+          const Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.start,
