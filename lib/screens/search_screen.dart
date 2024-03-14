@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fame_nadz/screens/profile_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import '../utils/colors.dart';
+import '../utils/global_variables.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -18,9 +20,10 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: mobileBackgroundColor,
+        backgroundColor: width > webScreenSize ? webBackgroundColor : mobileBackgroundColor,
         title: Form(
           child: TextFormField(
             controller: searchController,
@@ -53,14 +56,13 @@ class _SearchScreenState extends State<SearchScreen> {
             itemCount: (snapshot.data! as dynamic).docs.length,
             itemBuilder: (context, index) {
               return InkWell(
-                // onTap: () => Navigator.of(context).push(
-                //   MaterialPageRoute(
-                //     builder: (context) => ProfileScreen(
-                //       uid: (snapshot.data! as dynamic).docs[index]['uid'],
-                //     ),
-                //   ),
-                // ),
-                onTap: (){},
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => ProfileScreen(
+                      uid: (snapshot.data! as dynamic).docs[index]['uid'],
+                    ),
+                  ),
+                ),
                 child: ListTile(
                   leading: CircleAvatar(
                     backgroundImage: NetworkImage(
@@ -104,4 +106,3 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 }
-

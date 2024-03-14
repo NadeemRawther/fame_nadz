@@ -10,23 +10,19 @@ import '../responsive/mobile_screen_layout.dart';
 import '../responsive/responsive_layout_screen.dart';
 import '../responsive/web_screen_layout.dart';
 import '../utils/colors.dart';
+import '../utils/global_variables.dart';
 import '../utils/utils.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-
-
-
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _bioController = TextEditingController();
-  final TextEditingController _userNameController = TextEditingController();
   bool _isLoading = false;
 
   @override
@@ -34,24 +30,15 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
-    _bioController.dispose();
-    _userNameController.dispose();
   }
-  void loginUser()async{
+
+  void loginUser() async {
     setState(() {
       _isLoading = true;
     });
     String res = await AuthMethods().loginUser(
         email: _emailController.text, password: _passwordController.text);
-    if (res == 'success') {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => const ResponsiveLayout(
-            mobileScreenLayout: MobileScreenLayout(),
-            webScreenLayout: WebScreenLayout(),
-          ),
-        ),
-      );
+    if (res == 'Success') {
       if (context.mounted) {
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(
@@ -75,23 +62,27 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     }
   }
-  void navigateToSignUp(){
-    Navigator.of(context).push(MaterialPageRoute(builder:(context)=>SignupScreen()));
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 32),
+          padding: MediaQuery.of(context).size.width > webScreenSize
+              ? EdgeInsets.symmetric(
+              horizontal: MediaQuery.of(context).size.width / 3)
+              : const EdgeInsets.symmetric(horizontal: 32),
           width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Flexible(child: Container(), flex: 1),
+              Flexible(
+                flex: 2,
+                child: Container(),
+              ),
               SvgPicture.asset(
-                'assets/famenadzlog.svg',
+                'assets/ic_instagram.svg',
                 color: primaryColor,
                 height: 64,
               ),
@@ -99,16 +90,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 64,
               ),
               TextFieldInput(
-                  textEditingController: _emailController,
-                  hintText: "Enter Your Email",
-                  textInputType: TextInputType.emailAddress),
+                hintText: 'Enter your email',
+                textInputType: TextInputType.emailAddress,
+                textEditingController: _emailController,
+              ),
               const SizedBox(
                 height: 24,
               ),
               TextFieldInput(
-                textEditingController: _passwordController,
-                hintText: "Enter Your Password",
+                hintText: 'Enter your password',
                 textInputType: TextInputType.text,
+                textEditingController: _passwordController,
                 isPass: true,
               ),
               const SizedBox(
@@ -121,37 +113,54 @@ class _LoginScreenState extends State<LoginScreen> {
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(vertical: 12),
                   decoration: const ShapeDecoration(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(4))),
-                      color: blueColor),
-                 child:_isLoading? const
-                 Center(child: CircularProgressIndicator(),):
-                 const Text("Log In"),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(4)),
+                    ),
+                    color: blueColor,
+                  ),
+                  child: !_isLoading
+                      ? const Text(
+                    'Log in',
+                  )
+                      : const CircularProgressIndicator(
+                    color: primaryColor,
+                  ),
                 ),
               ),
               const SizedBox(
-                height: 24,
+                height: 12,
               ),
-              Flexible(child: Container(), flex: 1),
+              Flexible(
+                flex: 2,
+                child: Container(),
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
                     padding: const EdgeInsets.symmetric(vertical: 8),
-                    child: const Text("Dont you have an account? "),
+                    child: const Text(
+                      'Dont have an account?',
+                    ),
                   ),
                   GestureDetector(
-                    onTap: navigateToSignUp,
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const SignupScreen(),
+                      ),
+                    ),
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       child: const Text(
-                        "Sign Up",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        ' Signup.',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                  )
+                  ),
                 ],
-              )
+              ),
             ],
           ),
         ),

@@ -23,7 +23,7 @@ class _FeedScreenState extends State<FeedScreen> {
       appBar: width > webScreenSize
           ? null
           : AppBar(
-        backgroundColor: mobileBackgroundColor,
+        backgroundColor: width > webScreenSize ? webBackgroundColor : mobileBackgroundColor,
         centerTitle: false,
         title: SvgPicture.asset(
           'assets/ic_instagram.svg',
